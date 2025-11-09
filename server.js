@@ -4,7 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ["https://matteocast00-ship-it.github.io"]
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

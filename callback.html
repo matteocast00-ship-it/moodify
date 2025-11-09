@@ -58,7 +58,8 @@
   <div class="loader"></div>
 
   <script>
-    const redirectUri = "https://matteocast00-ship-it.github.io/moodify/callback.html";
+     const redirectUri = "https://matteocast00-ship-it.github.io/moodify/callback.html";
+    const clientId = "83f4830f9c104eaeb9a899c93dd69514"; // il tuo client ID
 
     async function getToken() {
       const code = new URLSearchParams(window.location.search).get("code");
@@ -70,29 +71,49 @@
       }
 
       try {
-        // 🔁 CHIAMATA AL SERVER LOCALE (proxy)
-        const res = await fetch("https://matteocast00-ship-it.github.io/moodify/callback", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code, codeVerifier })
-        });
+        // 🔁 Se sei in locale usa il proxy
+        const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+        let data;
 
-        const data = await res.json(); // ✅ corretto: era "response.json()"
+        if (isLocal) {
+          // Chiamata al server proxy locale
+          const res = await fetch("http://localhost:3000/callback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code, codeVerifier })
+          });
+          data = await res.json();
+          if (!res.ok || !data.access_token) throw new Error(data.error_description || JSON.stringify(data));
+        } else {
+          // Chiamata diretta a Spotify Web API (PKCE) per GitHub Pages
+          const body = new URLSearchParams({
+            client_id: clientId,
+            grant_type: "authorization_code",
+            code,
+            redirect_uri: redirectUri,
+            code_verifier: codeVerifier
+          });
+
+          const res = await fetch("https://accounts.spotify.com/api/token", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: body.toString()
+          });
+
+          data = await res.json();
+          if (!res.ok || !data.access_token) throw new Error(data.error_description || JSON.stringify(data));
+        }
+
+        // ✅ Salva token
         localStorage.setItem("spotify_token", data.access_token);
         if (data.refresh_token) localStorage.setItem("spotify_refresh_token", data.refresh_token);
         localStorage.removeItem("code_verifier");
 
-        if (!res.ok || !data.access_token) {
-          throw new Error(data.error_description || JSON.stringify(data));
-        }
-
-        // ✅ Salva il token nel localStorage
-        localStorage.setItem("spotify_token", data.access_token);
-        localStorage.removeItem("code_verifier");
-
         document.body.innerHTML = `<p class="success">✅ Login effettuato con successo! Torno all'app...</p>`;
         setTimeout(() => {
-          window.location.href = "https://matteocast00-ship-it.github.io/moodify/index.html";
+          window.location.href = isLocal
+            ? "http://127.0.0.1:5500/index.html"
+            : "https://matteocast00-ship-it.github.io/moodify/index.html";
         }, 1500);
 
       } catch (err) {
