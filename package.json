@@ -1,0 +1,25 @@
+{
+  "name": "spotifyteo",
+  "version": "1.0.0",
+  "description": "Moodify - Scopri la tua musica con Spotify e il tuo stato d’animo",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "spotify",
+    "music",
+    "mood",
+    "express",
+    "api"
+  ],
+  "author": "Teo",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  }
+}

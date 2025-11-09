@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moodify - Scopri la tua musica</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <main class="glass-panel">
+        <!-- 🟢 INTRO -->
+        <section id="intro-screen" class="screen active">
+            <h1 class="title">🎧 Moodify</h1>
+            <p class="subtitle">Scopri nuova musica in base al tuo stato d’animo</p>
+
+            <div class="auth-buttons">
+                <!-- 🔐 Pulsanti login/logout -->
+                <button id="loginSpotifyBtn" class="spotify-login">Login con Spotify</button>
+                <button id="logoutBtn" class="logout-btn hidden">Logout</button>
+
+                <!-- 👤 Profilo utente -->
+                <div id="userProfile" class="user-profile hidden">
+                    <img id="userImage" src="" alt="Profilo utente" />
+                    <p id="welcomeMsg"></p>
+                </div>
+            </div>
+
+            <button id="startBtn" class="btn">Inizia</button>
+        </section>
+
+        <!-- 💭 SELEZIONE MOOD -->
+        <section id="mood-screen" class="screen hidden">
+            <button class="back-btn" data-back="intro-screen">← Indietro</button>
+            <h2 class="title">Come ti senti oggi?</h2>
+
+            <form id="moodForm" class="mood-form">
+                <div class="custom-select" id="moodSelect">
+                    <div class="select-trigger">-- scegli un mood --</div>
+                    <div class="select-options">
+                        <div data-value="felice">Felice 😊</div>
+                        <div data-value="triste">Triste 😢</div>
+                        <div data-value="energico">Energico ⚡</div>
+                        <div data-value="rilassato">Rilassato 🌿</div>
+                        <div data-value="stressato">Stressato 😤</div>
+                        <div data-value="ansioso">Ansioso 😰</div>
+                        <div data-value="sportivo">Sportivo 🏃‍♂️</div>
+                        <div data-value="romantico ">Romantico 💞</div>
+                        <div data-value="nostalgico">Nostalgico 🕰️</div>
+                        <div data-value="concentrato">Concentrato 🎯</div>
+                        <div data-value="festaiolo">Festaiolo 🎉</div>
+                        <div data-value="arrabbiato">Arrabbiato 😡</div>
+                        <div data-value="meditativo">Meditativo 🧘‍♀️</div>
+                        <div data-value="creativo">Creativo 🎨</div>
+                        <div data-value="stanco">Stanco 😴</div>
+                        <div data-value="ko">K.O 😵</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Avanti</button>
+            </form>
+        </section>
+
+        <!-- 🌈 SELEZIONE GENERE -->
+        <section id="genre-screen" class="screen hidden">
+            <button class="back-btn" data-back="mood-screen">← Indietro</button>
+            <h2 class="title">Scegli un genere</h2>
+
+            <form id="genreForm" class="genre-form">
+                <div id="genreSelect" class="custom-select">
+                    <div class="select-trigger">-- scegli un genere --</div>
+                    <div class="select-options"></div>
+                </div>
+                <button type="submit" class="btn">Avanti</button>
+            </form>
+        </section>
+
+        <!-- 🎶 SELEZIONE PLAYLIST -->
+        <section id="playlist-screen" class="screen hidden">
+            <button class="back-btn" data-back="genre-screen">← Indietro</button>
+            <h2 class="title">Scegli una playlist</h2>
+
+            <div class="playlist-container">
+                <div id="playlists" class="results playlists-list">
+                    <p class="subtitle">🎧 Carico playlist...</p>
+                </div>
+                <div id="tracks" class="results tracks-list">
+                    <p class="subtitle">Seleziona una playlist per vedere i brani 🎵</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🔄 LOADING SCREEN -->
+        <section id="loading-screen" class="screen hidden">
+            <button class="back-btn" data-back="genre-screen">← Indietro</button>
+            <div class="equalizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <p class="subtitle">Sto trovando la tua vibe perfetta 🎵</p>
+        </section>
+
+        <!-- 🎵 RISULTATI -->
+        <section id="results-screen" class="screen hidden">
+            <button class="back-btn" data-back="genre-screen">← Indietro</button>
+            <h2 class="title">Ecco la tua vibe 🎶</h2>
+            <div id="results" class="results"></div>
+        </section>
+
+
+    </main>
+
+    <!-- 🎧 MINI PLAYER FISSO SOTTO IL GLASS PANEL -->
+    <div id="spotify-player" class="hidden mini-player">
+        <!-- Info brano -->
+        <div class="player-info-section">
+            <span id="player-artist">Artista</span>
+            <br>
+            <span id="player-title">Titolo</span>
+        </div>
+
+        <!-- Barra di progresso -->
+        <div class="player-progress">
+            <span id="current-time">0:00</span>
+            <input type="range" id="progress-bar" min="0" max="100" value="0">
+            <span id="total-time">0:00</span>
+        </div>
+
+
+        <!-- Controlli -->
+        <div class="player-controls">
+            <button id="prev-btn">⏮</button>
+            <button id="player-btn">▶</button>
+            <button id="next-btn">⏭</button>
+            <button id="player-close">✖</button>
+        </div>
+    </div>
+    <!-- AUDIO DI LOADING -->
+    <audio id="loading-audio" src="audio/loading.mp3" preload="auto"></audio>
+
+    <!-- SCRIPT -->
+    <script src="script.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    
+</body>
+
+</html>
