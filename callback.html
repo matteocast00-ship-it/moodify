@@ -71,7 +71,7 @@
 
       try {
         // 🔁 CHIAMATA AL SERVER LOCALE (proxy)
-        const res = await fetch("http://localhost:3000/callback", {
+        const res = await fetch("https://matteocast00-ship-it.github.io/moodify/callback", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, codeVerifier })
@@ -92,7 +92,7 @@
 
         document.body.innerHTML = `<p class="success">✅ Login effettuato con successo! Torno all'app...</p>`;
         setTimeout(() => {
-          window.location.href = "http://127.0.0.1:5500/index.html";
+          window.location.href = "https://matteocast00-ship-it.github.io/moodify/index.html";
         }, 1500);
 
       } catch (err) {

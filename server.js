@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // --- CONFIGURAZIONE SPOTIFY ---
 const clientId = "83f4830f9c104eaeb9a899c93dd69514";
-const redirectUri = "http://127.0.0.1:5500/callback.html";
+const redirectUri = "https://matteocast00-ship-it.github.io/moodify/callback.html";
 
 // =======================
 // Endpoint PKCE: riceve code + verifier e restituisce token
