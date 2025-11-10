@@ -1,6 +1,6 @@
 // --- CONFIGURAZIONE SPOTIFY (PKCE) ---
 const clientId = "83f4830f9c104eaeb9a899c93dd69514";
-const redirectUri = "http://127.0.0.1:5500/callback.html";
+const redirectUri = "https://matteocast00-ship-it.github.io/moodify/callback.html";
 
 // --- ELEMENTI DOM ---
 const introScreen = document.getElementById("intro-screen");
