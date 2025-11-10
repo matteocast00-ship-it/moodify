@@ -111,7 +111,9 @@
 
         document.body.innerHTML = `<p class="success">✅ Login effettuato con successo! Torno all'app...</p>`;
         setTimeout(() => {
-          window.location.href = "https://matteocast00-ship-it.github.io/moodify/index.html";
+          window.location.href = isLocal
+            ? "http://127.0.0.1:5500/index.html"
+            : "https://matteocast00-ship-it.github.io/moodify/index.html";
         }, 1500);
 
       } catch (err) {
