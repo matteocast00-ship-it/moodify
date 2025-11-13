@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="MoodFavicon.png">
   <title>Autenticazione Spotify...</title>
   <style>
     body {
@@ -22,8 +24,13 @@
       margin: 0.5rem 0;
     }
 
-    .error { color: #ff5c5c; }
-    .success { color: #1db954; }
+    .error {
+      color: #ff5c5c;
+    }
+
+    .success {
+      color: #1db954;
+    }
 
     .loader {
       margin-top: 20px;
@@ -36,8 +43,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
@@ -97,4 +109,5 @@
     getToken();
   </script>
 </body>
+
 </html>
